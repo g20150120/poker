@@ -1,5 +1,5 @@
 var log = console.log.bind(console)
-var port = 80
+var port = 8000
 
 var express = require('express')
 var app = express()

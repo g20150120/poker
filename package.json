@@ -2,7 +2,12 @@
   "name": "socket-chat-example",
   "version": "0.0.1",
   "description": "my first socket.io app",
+  "scripts": {
+    "begin": "node app.js"
+  },
   "dependencies": {
+    "body-parser": "~1.17.1",
+    "cookie-parser": "~1.4.3",
     "express": "^4.15.2",
     "nodemailer": "^4.4.0",
     "serve-favicon": "^2.4.5",
