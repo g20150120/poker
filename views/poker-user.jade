@@ -1,0 +1,250 @@
+doctype html
+html
+  head
+    title Poker-User#{playerID}
+    style(type='text/css').
+      canvas {
+      /*border: 1px black solid;*/
+      }
+      h2.inDiv {
+      text-align: center;
+      font-size: 40px;
+      margin-top: 0px;
+      }
+      h2.playerName {
+      margin-top: 30px;
+      }
+      form {
+      text-align: center;
+      }
+      div.container {
+      width: 1400px;
+      }
+      div.form-group {
+      text-align: center;
+      padding-left: 30%;
+      padding-right: 30%;
+      }
+      div.col-xs-4 {
+      padding-top: 10px;
+      padding-bottom: 10px;
+      }
+      div.col-xs-6 {
+      padding-top: 10px;
+      padding-bottom: 10px;
+      }
+      div.quit {
+      padding-top: 10px;
+      padding-bottom: 10px;
+      }
+      div.col-xs-8 {
+      padding-top: 15px;
+      padding-bottom: 10px;
+      }
+      input {
+      text-align: center;
+      }
+      input.form-control {
+      padding-left: 6px;
+      padding-right: 6px;
+      font-size: 20px;
+      }
+      button.btn {
+      font-size: 24px;
+      padding-left: 6px;
+      padding-right: 6px;
+      }
+    script(src='./js/poker-user.js')
+    script(src='./socket.io/socket.io.js')
+    link(rel='stylesheet', type='text/css', href='./css/bootstrap.css')
+  body
+    center
+      canvas#id-canvas(width='1400', height='572')
+    .container
+      .row
+        - for(var i=0; i<4; i++) {
+            - if(i != playerID) {
+              
+                .col-xs-3                  
+                  .col-xs-12(id="#{i}-name")
+                    h2.inDiv.playerName Player #{i+1}
+                  .col-xs-12
+                    h2.inDiv(id="#{i}-currentBet")
+                      | 0
+
+            - } else {
+
+                .col-xs-3
+                  .col-xs-12(id="#{i}-name")
+                    form(role='form', onsubmit="return nameSubmit('#{i}')")
+                      input.form-control(id="#{i}-in", type='text', placeholder='Enter your name', value='')
+                  .col-xs-12.quit
+                    button.btn.btn-block.btn-danger(onclick="return quitP('#{i}')") fold
+                  .col-xs-12
+                    form(role='form', onsubmit="return bet('#{i}')")
+                      input.form-control(id="#{i}-bet", type='text', placeholder='Enter your bet', value='')
+                  .col-xs-12
+                    h2.inDiv(id="#{i}-currentBet")
+                      | 0
+
+            - }
+
+        - }
+        
+    script(type='text/javascript').
+      var player_i = #{playerID}
+      var socket = io()
+      var view
+      var board
+      var players = []
+      var names = ["", "", "", ""]
+      var pool
+      for(var i=0; i<4; i++) {
+      var player = Player(50 + 350 * i, 395)
+      players.push(player)
+      }
+      var __ini__ = function() {
+      view = View()
+      board = Board()
+      for(var i=0; i<4; i++) {
+      // clear players.cards
+      players[i].ini()
+      }
+      pool = 0
+      }
+      __ini__()
+    script(type='text/javascript').
+      // change players' names
+      var nameSubmit = function(id) {
+      var i = parseInt(id)
+      var name = document.getElementById(id + '-in').value
+      if(name.length > 4 || name.length == 0) {
+      alert('length should <= 4 && > 0')
+      return false
+      }
+      // send this name to all clients
+      var o = {
+      com: "playerName",
+      name: name,
+      i: i,
+      }
+      socket.emit('exeCom', o)
+      return false
+      }
+      // show player by id
+      var showP = function(id) {
+      var i = parseInt(id)
+      view.showPlayers([players[i]])
+      }
+      // quit player by id
+      var quitP = function(id) {
+      var i = parseInt(id)
+      var o = {
+      com: "playerQuit",
+      i: i,
+      }
+      socket.emit('exeCom', o)
+      }
+      // handle bet request
+      var bet = function(id) {
+      var i = parseInt(id)
+      var num = document.getElementById(id + '-bet').value
+      num = parseInt(num)
+      document.getElementById(id + '-bet').value = ""
+      if(num.toString() == 'NaN' || num < 0) {
+      alert('please input a number >= 0')
+      return false
+      }
+      if(num > players[i].money) {
+      alert('cannot bet that much!')
+      return false
+      }
+      // send this bet to all clients
+      var o = {
+      com: "playerBet",
+      money: num,
+      i: i,
+      }
+      socket.emit('exeCom', o)
+      return false
+      }
+    script(type='text/javascript').
+      socket.on('exeCom', function(obj) {
+      var c = obj.com
+      if(c == "playerBet") {
+      var num = obj.money
+      var i = obj.i
+      var id = i.toString()
+      players[i].moneyChange(num, i)
+      pool += num
+      var cur = document.getElementById(id + '-currentBet').innerHTML
+      cur = parseInt(cur) + num
+      document.getElementById(id + '-currentBet').innerHTML = cur.toString()
+      return
+      }
+      if(c == "playerName") {
+      var i = obj.i
+      names[i] = obj.name
+      players[i].showName(names[i])
+      players[i].moneyChange(0, i)
+      return
+      }
+      if(c == "playerQuit") {
+      var i = obj.i
+      view.quitPlayer(players[i])
+      return
+      }
+      if(c == "board") {
+      board.cards = obj.cards
+      view.showBoard(board)
+      return
+      }
+      if(c == "showBack") {
+      board.showBack(view)
+      return
+      }
+      if(c == "playerIni") {
+      var i = obj.i
+      players[i].showBack(view)
+      players[i].showName(names[i])
+      return
+      }
+      if(c == "printWinners") {
+      var winners = obj.winners
+      view.printWinners(winners)
+      for(var i=0; i<4; i++) {
+      var id = i.toString() + '-currentBet'
+      // log(id)
+      document.getElementById(id).innerHTML = '0'
+      }
+      var len = winners.length
+      var val = obj.pool / len
+      for(var i=0; i<players.length; i++) {
+      for(var j=0; j<winners.length; j++) {
+      var each = winners[j]
+      var p = players[i]
+      if(each.x == p.x && each.y == p.y) {
+      players[i].moneyChange(-val, i)
+      }
+      }
+      }
+      return
+      }
+      if(c == "showDealer") {
+      var dealerIndex = obj.i
+      players[dealerIndex].showDealer(view)
+      return
+      }
+      if(c == "holeCards") {
+      var index = obj.i
+      if(index == player_i) {
+      players[index].cards = obj.cards
+      showP(player_i.toString())
+      }
+      return
+      }
+      if(c == "__ini__") {
+      __ini__()
+      return
+      }
+      })

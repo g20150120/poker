@@ -5,44 +5,17 @@ var canvasWidth = 1400
 var canvasHeight = 572
 var cardWidth = 115
 var cardHeight = 175
-var Scramble_Times = 10
-var ifScramble = true
 var iniMoney = 20000
 
-var quitPath = './public/images/cards/quit.jpg'
-var backPath = './public/images/cards/back.jpg'
-var dealerPath = './public/images/cards/dealer.jpg'
+var quitPath = 'quit'
+var backPath = 'back'
+var dealerPath = 'dealer'
 
 var imageFromPath = function(path) {
     var img = new Image()
-    img.src = path
+    img.src = './images/cards/' + path + '.jpg'
+    img.alt = path
     return img
-}
-
-var imagePath = function(su, num) {
-    //
-    return './public/images/cards/' + su + num.toString() + '.jpg'
-}
-
-var numberDescending = function(c1, c2) {
-    //
-    return c1.number < c2.number
-}
-
-var intDescending = function(int1, int2) {
-    //
-    return int1 < int2
-}
-
-var PokerCard = function(su, num) {
-    var path = imagePath(su, num)
-    var o = {
-        number: num, // int
-        suit: su,    // char
-        imagePath: path
-    }
-
-    return o;
 }
 
 var Board = function(sx = 400, sy = 3) {
@@ -61,9 +34,14 @@ var Board = function(sx = 400, sy = 3) {
     }
 
     o.showIn = function(view) {
+        var msg = 'board:'
         for(var i=0; i<o.cards.length; i++) {
             var card = o.cards[i]
-            // console.log(card)
+            msg = msg + ' ' + card.imagePath
+        }
+        alert(msg)
+        for(var i=0; i<o.cards.length; i++) {
+            var card = o.cards[i]
             view.drawImage(card.imagePath, o.x + i * (cardWidth + 5), o.y)       
         }
     }
@@ -97,9 +75,14 @@ var Player = function(sx = 40, sy = 403) {
     }
 
     o.showIn = function(view) {
+        var msg = 'player:'
         for(var i=0; i<o.cards.length; i++) {
             var card = o.cards[i]
-            // console.log(card)
+            msg = msg + ' ' + card.imagePath
+        }
+        alert(msg)
+        for(var i=0; i<o.cards.length; i++) {
+            var card = o.cards[i]
             view.drawImage(card.imagePath, o.x + i * (cardWidth + 5), o.y)       
         }
     }
@@ -120,8 +103,8 @@ var Player = function(sx = 40, sy = 403) {
 
     o.showMoney = function(id) {
         var money = o.money.toString()
-        var p = document.getElementById('p' + id + '-name')
-        p.innerHTML = '<h2 class="inDiv" id="p' + id + '-money">' + money + '</h2>'
+        var p = document.getElementById(id + '-name')
+        p.innerHTML = '<h2 class="inDiv" id="' + id + '-money">' + money + '</h2>'
     }
 
     o.quit = function(view) {
@@ -132,9 +115,8 @@ var Player = function(sx = 40, sy = 403) {
     }
 
     o.moneyChange = function(num, i) {
-        log('moneyChange (num)', i)
         o.money -= num
-        var id = (i+1).toString()
+        var id = i.toString()
         o.showMoney(id)
     }
 

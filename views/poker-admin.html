@@ -25,15 +25,15 @@
             padding-left: 30%;
             padding-right: 30%;
         }
-        div.col-md-4 {
+        div.col-xs-4 {
             padding-top: 10px;
             padding-bottom: 10px;
         }
-        div.col-md-6 {
+        div.col-xs-6 {
             padding-top: 10px;
             padding-bottom: 10px;
         }
-        div.col-md-8 {
+        div.col-xs-8 {
             padding-top: 15px;
             padding-bottom: 10px;
         }
@@ -51,105 +51,122 @@
             padding-right: 6px;
         }
     </style>
-    <script src="./public/js/poker-admin.js"></script>
+    <script src="./js/poker-admin.js"></script>
     <script src="./socket.io/socket.io.js"></script>
-    <link rel="stylesheet" type="text/css" href="./public/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
 </head>
 <body>
     <center>
-        <!-- <img src="cards/back.jpg"> -->
         <canvas id="id-canvas" width="1400" height="572"></canvas>
-
     </center>
 
         <div class="container">
             <div class="row">
 
-                <!-- player 1 -->
-                <div class="col-md-3">
-                    <div id="p1-name" class="col-md-12">
-                        <form role="form" onsubmit="return nameSubmit('1')">
-                            <input type="text" class="form-control" id="p1-in" 
-                                    placeholder="Enter your name" value="">
+                <!-- 
+                    id-name: 一开始显示Player id或者输名字的框； 输完名字显示玩家现在的资产数量
+                    
+                    id-in: 供玩家输入自己的名字； 输完名字消失
+
+                    id-bet: 供玩家输入自己当前的赌注
+
+                    id-currentBey: 显示玩家当前的赌注
+
+                    FTR-btn: 翻牌的按钮
+                 -->
+                
+                <!-- player 0 -->
+                <div class="col-xs-3">
+                    <div id="0-name" class="col-xs-12">
+                        <form role="form" onsubmit="return nameSubmit('0')">
+                            <input type="text" class="form-control" id="0-in" placeholder="Enter your name" value="">
                         </form>
                     </div>
-                    <div class="col-md-4">                   
+                    <div class="col-xs-4">                   
                         <button id="FTR-btn" class="btn btn-block btn-success" onclick="return FTR()">flop</button>
                     </div>
-                    <div class="col-md-4">                   
-                        <button class="btn btn-block btn-info" onclick="return showP('1')">show</button>
+                    <div class="col-xs-4">                   
+                        <button class="btn btn-block btn-info" onclick="return showP('0')">show</button>
                     </div>
-                    <div class="col-md-4">                   
-                        <button class="btn btn-block btn-danger" onclick="return quitP('1')">quit</button>
+                    <div class="col-xs-4">                   
+                        <button class="btn btn-block btn-danger" onclick="return quitP('0')">fold</button>
                     </div>
-                    <div class="col-md-8"> 
-                        <form role="form" onsubmit="return bet('1')">
-                                <input id="p1-bet" type="text" class="form-control" placeholder="Enter your bet" value="">
+                    <div class="col-xs-8"> 
+                        <form role="form" onsubmit="return bet('0')">
+                                <input id="0-bet" type="text" class="form-control" placeholder="Enter your bet" value="">
                         </form>
                     </div>
-                    <div class="col-md-4">                   
+                    <div class="col-xs-4">                   
                         <button class="btn btn-block btn-primary" onclick="return nnext()">next</button>
                     </div>
-                    <div class="col-md-12">
-                        <h2 id="1-currentBet" class="inDiv">
+                    <div class="col-xs-12">
+                        <h2 id="0-currentBet" class="inDiv">
                             0
                         </h2>
                     </div>
-
                 </div>
                 
 
-                <!-- player 2 -->
-                <div class="col-md-3">
-                    <div id="p2-name" class="col-md-12">
+                <!-- player 1 -->
+                <div class="col-xs-3">
+                    <div id="1-name" class="col-xs-12">
                         
                     </div>
-                    
-                    <div class="col-md-12">
+                    <div class="col-xs-12">
+                        <button class="btn btn-block btn-danger" onclick="return quitP('1')">fold</button>
+                    </div>
+                    <div class="col-xs-12">
+                        <h2 id="1-currentBet" class="inDiv">
+                            0
+                        </h2>
+                    </div>                    
+                </div>
+
+                <!-- player 2 -->
+                <div class="col-xs-3">
+                    <div id="2-name" class="col-xs-12">
+                        
+                    </div>
+                    <div class="col-xs-12">
+                        <button class="btn btn-block btn-danger" onclick="return quitP('2')">fold</button>
+                    </div>
+                    <div class="col-xs-12">
                         <h2 id="2-currentBet" class="inDiv">
                             0
                         </h2>
-                    </div>                    
+                    </div>
                 </div>
 
                 <!-- player 3 -->
-                <div class="col-md-3">
-                    <div id="p3-name" class="col-md-12">
+                <div class="col-xs-3">
+                    <div id="3-name" class="col-xs-12">
                         
                     </div>
-                    
-                    <div class="col-md-12">
+                    <div class="col-xs-12">
+                        <button class="btn btn-block btn-danger" onclick="return quitP('3')">fold</button>
+                    </div>
+                    <div class="col-xs-12">
                         <h2 id="3-currentBet" class="inDiv">
-                            0
-                        </h2>
-                    </div>
-                </div>
-
-                <!-- player 4 -->
-                <div class="col-md-3">
-                    <div id="p4-name" class="col-md-12">
-                        
-                    </div>
-                    
-                    <div class="col-md-12">
-                        <h2 id="4-currentBet" class="inDiv">
                             0
                         </h2>
                     </div>                    
                 </div>
+            
+
+
             </div>
         </div>
 
     
-
+<!-- prepare for a new game: -->
 <script type="text/javascript">
-    var player_i = 0
+    var player_i = 0      // range: 0 1 2 3
 
     var socket = io()
 
     var check = []
     var sta = []
-    var dealerIndex = 3
+    var dealerIndex = 3   // 0 1 2 3 
     var view
     var pool
     var pile
@@ -162,16 +179,22 @@
         players.push(player)
     }
 
+    // prepare for the next round
     var __ini__ = function() {
+        
         check['flop'] = true, check['turn'] = false, check['river'] = false
         sta['cmp'] = true, sta['nxt'] = false
 
         document.getElementById('FTR-btn').innerHTML = "flop"
         dealerIndex = (dealerIndex+1) % 4
+        
+        // prepare the canvas
         view = View()
 
+        // get a scrambled card pile
         pile = CardPile()
         
+        // get an empty board
         board = Board()
 
         // show the back of 5 cards on the board
@@ -181,9 +204,10 @@
         socket.emit('exeCom', o)
 
         for(var i=0; i<4; i++) {
+            // clear this player's cards and reset status
             players[i].ini()
 
-            // show players' names and their cards' back 
+            // show this player's name and his cards' back 
             var o = {
                 com: "playerIni",
                 i: i,
@@ -191,14 +215,17 @@
             socket.emit('exeCom', o)
         }
 
+        // show the dealer mark above dealerIndex
         var o = {
             com: "showDealer",
             i: dealerIndex,
         }
         socket.emit('exeCom', o)
         
+        // give cards to the players
         view.holeCards(players, pile)
         
+        // send cards to the clients
         for(var i=0; i<4; i++) {
             var o = {
                 com: "holeCards",
@@ -208,6 +235,7 @@
             socket.emit('exeCom', o)
         }
 
+        // reset pool
         pool = 0
     }
 
@@ -218,23 +246,24 @@
 <script type="text/javascript">
 
     // change players' names
-    var nameSubmit = function(str) {
-        var i = parseInt(str) - 1
-        var name = document.getElementById('p' + str + '-in').value
+    var nameSubmit = function(id) {
+        var i = parseInt(id)
+        var name = document.getElementById(id + '-in').value
         if(name.length > 4 || name.length == 0) {
             alert('length should <= 4 && > 0')
             return false
         }
         
+        // send this name to all clients
         var o = {
+            com: "playerName",
             name: name,
-            id: str
+            i: i,
         }
-        socket.emit('playerName', o)
+        socket.emit('exeCom', o)
         
         return false
     }
-
 
     // go to flop, turn, river rounds
     var is_flop = function() {
@@ -259,11 +288,12 @@
         return true
     }
     var FTR = function() {
-        var str = document.getElementById('FTR-btn')
-        if(str.innerHTML == "flop") {
+        var id = document.getElementById('FTR-btn')
+        if(id.innerHTML == "flop") {
             if(is_flop()) {
                 board.getXFrom(3, pile)
                 
+                // send current board to all users 
                 var o = {
                     com: "board",
                     cards: board.cards,
@@ -272,14 +302,15 @@
 
                 check['flop'] = false
                 check['turn'] = true
-                str.innerHTML = "turn"
+                id.innerHTML = "turn"
                 return
             }            
         }
-        if(str.innerHTML == "turn") {
+        if(id.innerHTML == "turn") {
             if(is_turn()) {
                 board.getXFrom(1, pile)
 
+                // send current board to all users 
                 var o = {
                     com: "board",
                     cards: board.cards,
@@ -288,14 +319,15 @@
 
                 check['turn'] = false
                 check['river'] = true
-                str.innerHTML = "river"
+                id.innerHTML = "river"
                 return
             }            
         }
-        if(str.innerHTML == "river") {
+        if(id.innerHTML == "river") {
             if(is_river()) {
                 board.getXFrom(1, pile)
 
+                // send current board to all users 
                 var o = {
                     com: "board",
                     cards: board.cards,
@@ -304,49 +336,57 @@
 
                 check['turn'] = false
                 check['river'] = true
-                str.innerHTML = "flop"
+                id.innerHTML = "flop"
                 return
             }           
         }
     }
 
     // show player by id
-    var showP = function(str) {
-        var i = parseInt(str) - 1
+    var showP = function(id) {
+        var i = parseInt(id)
         view.showPlayers([players[i]])
     }
 
     // quit player by id
-    var quitP = function(str) {
-        var i = parseInt(str) - 1
-        socket.emit('playerQuit', i)
+    var quitP = function(id) {
+        var i = parseInt(id)
+
+        var o = {
+            com: "playerQuit",
+            i: i,
+        }
+        socket.emit('exeCom', o)
     }
 
     // handle bet request
-    var bet = function(str) {
-        var i = parseInt(str) - 1
-        var ctx = document.getElementById('p' + str + '-bet').value
-        document.getElementById('p' + str + '-bet').value = ""
-        ctx = parseInt(ctx)
-        if(ctx.toString() == 'NaN' || ctx < 0) {
+    var bet = function(id) {
+        
+        var i = parseInt(id)
+        var num = document.getElementById(id + '-bet').value
+        num = parseInt(num)
+        document.getElementById(id + '-bet').value = ""
+        if(num.toString() == 'NaN' || num < 0) {
             alert('please input a number >= 0')
             return false
         }
-        if(ctx > players[i].money) {
+        if(num > players[i].money) {
             alert('cannot bet that much!')
             return false
         }
         
+        // send this bet to all clients 
         var o = {
-            money: ctx,
-            id: str,
+            com: "playerBet",
+            money: num,
+            i: i,
         }
-        socket.emit('playerBet', o)
+        socket.emit('exeCom', o)
         
         return false
     }
 
-    // handle the request to cmp and play next game
+    // handle the request to cmp and play next round
     var compare = function() {
         if(board.cards.length < 3) {
             alert('please flop cards')
@@ -384,7 +424,6 @@
                 com: "__ini__",
             }
             socket.emit('exeCom', o)
-            
             return
         }
     }
@@ -393,31 +432,31 @@
 
 <script type="text/javascript">
     
-    socket.on('playerName', function(obj) {
-        var i = parseInt(obj.id) - 1
-        names[i] = obj.name
-        players[i].showName(names[i])
-        players[i].moneyChange(0, i)        
-    })
-    
-    socket.on('playerQuit', function(i) {
-        //
-        view.quitPlayer(players[i])
-    })
-    
-    socket.on('playerBet', function(obj) {
-        var ctx = obj.money
-        var i = parseInt(obj.id) - 1
-        var str = obj.id
-        players[i].moneyChange(ctx, i)
-        pool += ctx
-        var cur = document.getElementById(str + '-currentBet').innerHTML
-        cur = parseInt(cur) + ctx
-        document.getElementById(str + '-currentBet').innerHTML = cur.toString()
-    })
-    
     socket.on('exeCom', function(obj) {
         var c = obj.com
+        if(c == "playerBet") {
+            var num = obj.money
+            var i = obj.i
+            var id = i.toString()
+            players[i].moneyChange(num, i)
+            pool += num
+            var cur = document.getElementById(id + '-currentBet').innerHTML
+            cur = parseInt(cur) + num
+            document.getElementById(id + '-currentBet').innerHTML = cur.toString()
+            return
+        }
+        if(c == "playerName") {
+            var i = obj.i
+            names[i] = obj.name
+            players[i].showName(names[i])
+            players[i].moneyChange(0, i)
+            return
+        }
+        if(c == "playerQuit") {
+            var i = obj.i
+            view.quitPlayer(players[i])
+            return
+        }
         if(c == "board") {
             board.cards = obj.cards
             view.showBoard(board)            
@@ -436,7 +475,7 @@
         if(c == "printWinners") {
             var winners = obj.winners
             view.printWinners(winners)
-            for(var i=1; i<= 4; i++) {
+            for(var i=0; i<4; i++) {
                 var id = i.toString() + '-currentBet'
                 // log(id)
                 document.getElementById(id).innerHTML = '0'

@@ -5,13 +5,13 @@ var canvasWidth = 1400
 var canvasHeight = 572
 var cardWidth = 115
 var cardHeight = 175
-var Scramble_Times = 20
+var Scramble_Times = 10
 var ifScramble = true
 var iniMoney = 20000
 
-var quitPath = './public/images/cards/quit.jpg'
-var backPath = './public/images/cards/back.jpg'
-var dealerPath = './public/images/cards/dealer.jpg'
+var quitPath = 'quit'
+var backPath = 'back'
+var dealerPath = 'dealer'
 
 var Level = []
 
@@ -30,13 +30,14 @@ var LevelInitialize = function() {
 
 var imageFromPath = function(path) {
     var img = new Image()
-    img.src = path
+    img.src = './images/cards/' + path + '.jpg'
+    img.alt = path
     return img
 }
 
 var imagePath = function(su, num) {
     //
-    return './public/images/cards/' + su + num.toString() + '.jpg'
+    return su + num.toString()
 }
 
 Array.prototype.removeByValue = function(val) {
@@ -48,9 +49,16 @@ Array.prototype.removeByValue = function(val) {
     }
 }
 
-var randomCompare = function(card1, card2) {
-    // random() return [0,1); round四舍五入
-    return Math.round(Math.random())
+Array.prototype.shuffle = function() {
+    var array = this
+    var m = array.length, t, i
+    while (m) {
+        i = Math.floor(Math.random() * m--)
+        t = array[m]
+        array[m] = array[i]
+        array[i] = t
+    }
+    return array
 }
 
 var numberDescending = function(c1, c2) {
@@ -319,7 +327,7 @@ var CardPile = function(pileSize = 1) {
 
     o.scramble = function() {
         for(var i=0; i<Scramble_Times; i++) {
-            o.cards.sort(randomCompare)
+            o.cards.shuffle()
         }
     }
 
@@ -353,9 +361,14 @@ var Board = function(sx = 400, sy = 3) {
     }
 
     o.showIn = function(view) {
+        var msg = 'board:'
         for(var i=0; i<o.cards.length; i++) {
             var card = o.cards[i]
-            // console.log(card)
+            msg = msg + ' ' + card.imagePath
+        }
+        alert(msg)
+        for(var i=0; i<o.cards.length; i++) {
+            var card = o.cards[i]
             view.drawImage(card.imagePath, o.x + i * (cardWidth + 5), o.y)       
         }
     }
@@ -381,6 +394,7 @@ var Player = function(sx = 40, sy = 403, name = "") {
         money: iniMoney,
     }
 
+    // clear this player
     o.ini = function() {
         o.cards = []
         o.level = 0
@@ -395,9 +409,14 @@ var Player = function(sx = 40, sy = 403, name = "") {
     }
 
     o.showIn = function(view) {
+        var msg = 'player:'
         for(var i=0; i<o.cards.length; i++) {
             var card = o.cards[i]
-            // console.log(card)
+            msg = msg + ' ' + card.imagePath
+        }
+        alert(msg)
+        for(var i=0; i<o.cards.length; i++) {
+            var card = o.cards[i]
             view.drawImage(card.imagePath, o.x + i * (cardWidth + 5), o.y)       
         }
     }
@@ -418,8 +437,8 @@ var Player = function(sx = 40, sy = 403, name = "") {
 
     o.showMoney = function(i) {
         var money = o.money.toString()
-        var p = document.getElementById('p' + i + '-name')
-        p.innerHTML = '<h2 class="inDiv" id="p' + i + '-money">' + money + '</h2>'
+        var p = document.getElementById(i + '-name')
+        p.innerHTML = '<h2 class="inDiv" id="' + i + '-money">' + money + '</h2>'
     }
 
     o.quit = function(view) {
@@ -486,7 +505,7 @@ var Player = function(sx = 40, sy = 403, name = "") {
 
     o.moneyChange = function(num, i) {
         o.money -= num
-        i = (i+1).toString()
+        i = i.toString()
         o.showMoney(i)
     }
 
