@@ -5,7 +5,7 @@ var canvasWidth = 1400
 var canvasHeight = 572
 var cardWidth = 115
 var cardHeight = 175
-var Scramble_Times = 10
+var Scramble_Times = 30
 var ifScramble = true
 var iniMoney = 20000
 
@@ -258,7 +258,7 @@ var IsOther = function(numberTimes) {
             
             o.level = Level['fourOfAKind']
             o.tmpCards.push(qua[0])
-            cards.removeByValue(o.quarticNumber[0])
+            cards.removeByValue(qua[0])
             o.tmpCards = o.tmpCards.concat(cards.slice(0,1))
         }
     }
@@ -303,6 +303,35 @@ var PokerCard = function(su, num) {
     }
 
     return o;
+}
+
+var cardToString = function(o) {
+    var str = ""
+    
+    if(o.suit == 's') {
+        str += "黑桃"
+    } else if(o.suit == 'd') {
+        str += "方片"
+    } else if(o.suit == 'h') {
+        str += "红桃"
+    } else if(o.suit == 'c') {
+        str += "草花"
+    }
+
+    if(o.number == 11) {
+        str += "J"
+    } else if(o.number == 12) {
+        str += "Q"
+    } else if(o.number == 13) {
+        str += "K"
+    } else if(o.number == 14) {
+        str += "A"
+    } else {
+        str += o.number.toString()
+    } 
+
+    return str
+
 }
 
 var CardPile = function(pileSize = 1) {
@@ -361,12 +390,12 @@ var Board = function(sx = 400, sy = 3) {
     }
 
     o.showIn = function(view) {
-        var msg = 'board:'
-        for(var i=0; i<o.cards.length; i++) {
-            var card = o.cards[i]
-            msg = msg + ' ' + card.imagePath
-        }
-        alert(msg)
+        // var msg = 'board:'
+        // for(var i=0; i<o.cards.length; i++) {
+        //     var card = o.cards[i]
+        //     msg = msg + ' ' + card.imagePath
+        // }
+        // alert(msg)
         for(var i=0; i<o.cards.length; i++) {
             var card = o.cards[i]
             view.drawImage(card.imagePath, o.x + i * (cardWidth + 5), o.y)       
@@ -409,12 +438,12 @@ var Player = function(sx = 40, sy = 403, name = "") {
     }
 
     o.showIn = function(view) {
-        var msg = 'player:'
-        for(var i=0; i<o.cards.length; i++) {
-            var card = o.cards[i]
-            msg = msg + ' ' + card.imagePath
-        }
-        alert(msg)
+        // var msg = 'player:'
+        // for(var i=0; i<o.cards.length; i++) {
+        //     var card = o.cards[i]
+        //     msg = msg + ' ' + card.imagePath
+        // }
+        // alert(msg)
         for(var i=0; i<o.cards.length; i++) {
             var card = o.cards[i]
             view.drawImage(card.imagePath, o.x + i * (cardWidth + 5), o.y)       
@@ -581,7 +610,16 @@ var View = function() {
 
 var findWinners = function(players) {
     var winners = []
-    players.sort(playerCmp)
+    for(var i=players.length-1; i>=1; i--) {
+        for(var j=i; j>=1; j--) {
+            if(playerCmp(players[j-1], players[j])) {
+                var tmp = players[j-1]
+                players[j-1] = players[j]
+                players[j] = tmp
+            }
+        }
+    }
+    // players.sort(playerCmp)
     winners.push(getPlayerXY(players[0]))
     for(var i=1; i<players.length; i++) {
         if(players[i].level == players[0].level) {

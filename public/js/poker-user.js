@@ -18,6 +18,35 @@ var imageFromPath = function(path) {
     return img
 }
 
+var cardToString = function(o) {
+    var str = ""
+    
+    if(o.suit == 's') {
+        str += "黑桃"
+    } else if(o.suit == 'd') {
+        str += "方片"
+    } else if(o.suit == 'h') {
+        str += "红桃"
+    } else if(o.suit == 'c') {
+        str += "草花"
+    }
+
+    if(o.number == 11) {
+        str += "J"
+    } else if(o.number == 12) {
+        str += "Q"
+    } else if(o.number == 13) {
+        str += "K"
+    } else if(o.number == 14) {
+        str += "A"
+    } else {
+        str += o.number.toString()
+    } 
+
+    return str
+
+}
+
 var Board = function(sx = 400, sy = 3) {
 
     var o = {
@@ -34,12 +63,12 @@ var Board = function(sx = 400, sy = 3) {
     }
 
     o.showIn = function(view) {
-        var msg = 'board:'
-        for(var i=0; i<o.cards.length; i++) {
-            var card = o.cards[i]
-            msg = msg + ' ' + card.imagePath
-        }
-        alert(msg)
+        // var msg = 'board:'
+        // for(var i=0; i<o.cards.length; i++) {
+        //     var card = o.cards[i]
+        //     msg = msg + ' ' + card.imagePath
+        // }
+        // alert(msg)
         for(var i=0; i<o.cards.length; i++) {
             var card = o.cards[i]
             view.drawImage(card.imagePath, o.x + i * (cardWidth + 5), o.y)       
@@ -75,12 +104,12 @@ var Player = function(sx = 40, sy = 403) {
     }
 
     o.showIn = function(view) {
-        var msg = 'player:'
-        for(var i=0; i<o.cards.length; i++) {
-            var card = o.cards[i]
-            msg = msg + ' ' + card.imagePath
-        }
-        alert(msg)
+        // var msg = 'player:'
+        // for(var i=0; i<o.cards.length; i++) {
+        //     var card = o.cards[i]
+        //     msg = msg + ' ' + card.imagePath
+        // }
+        // alert(msg)
         for(var i=0; i<o.cards.length; i++) {
             var card = o.cards[i]
             view.drawImage(card.imagePath, o.x + i * (cardWidth + 5), o.y)       

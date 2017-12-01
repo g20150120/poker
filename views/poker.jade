@@ -78,7 +78,9 @@ html
                   .col-xs-12(id="#{i}-name")
                     form(role='form', onsubmit="return nameSubmit('#{i}')")
                       input.form-control(id="#{i}-in", type='text', placeholder='Enter your name', value='')
-                  .col-xs-12.quit
+                  .col-xs-6
+                    button.btn.btn-block.btn-info(onclick="return alertCards('#{i}')") show
+                  .col-xs-6
                     button.btn.btn-block.btn-danger(onclick="return quitP('#{i}')") fold
                   .col-xs-12
                     form(role='form', onsubmit="return bet('#{i}')")
@@ -114,6 +116,22 @@ html
       }
       __ini__()
     script(type='text/javascript').
+      var alertCards = function(id) {
+      var index = parseInt(id)
+      var msg = ""
+      if(board.cards.length) {
+      msg += "board: "
+      for(var i=0; i<board.cards.length; i++) {
+      msg += cardToString(board.cards[i]) + " "
+      }
+      msg += '\n'
+      }
+      msg += "player: "
+      for(var i=0; i<players[index].cards.length; i++) {
+      msg += cardToString(players[index].cards[i]) + " "
+      }
+      alert(msg)
+      }
       // change players' names
       var nameSubmit = function(id) {
       var i = parseInt(id)
@@ -218,7 +236,7 @@ html
       document.getElementById(id).innerHTML = '0'
       }
       var len = winners.length
-      var val = obj.pool / len
+      var val = parseInt(obj.pool / len)
       for(var i=0; i<players.length; i++) {
       for(var j=0; j<winners.length; j++) {
       var each = winners[j]

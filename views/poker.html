@@ -86,7 +86,7 @@
                         <button id="FTR-btn" class="btn btn-block btn-success" onclick="return FTR()">flop</button>
                     </div>
                     <div class="col-xs-4">                   
-                        <button class="btn btn-block btn-info" onclick="return showP('0')">show</button>
+                        <button class="btn btn-block btn-info" onclick="return alertCards('0')">show</button>
                     </div>
                     <div class="col-xs-4">                   
                         <button class="btn btn-block btn-danger" onclick="return quitP('0')">fold</button>
@@ -244,6 +244,23 @@
 </script>
 
 <script type="text/javascript">
+
+    var alertCards = function(id) {
+        var index = parseInt(id)
+        var msg = ""
+        if(board.cards.length) {
+            msg += "board: "
+            for(var i=0; i<board.cards.length; i++) {
+                msg += cardToString(board.cards[i]) + " "
+            }
+            msg += '\n'
+        }
+        msg += "player: "
+        for(var i=0; i<players[index].cards.length; i++) {
+            msg += cardToString(players[index].cards[i]) + " "
+        }
+        alert(msg)
+    }
 
     // change players' names
     var nameSubmit = function(id) {
@@ -481,7 +498,7 @@
                 document.getElementById(id).innerHTML = '0'
             }
             var len = winners.length
-            var val = obj.pool / len
+            var val = parseInt(obj.pool / len)
             for(var i=0; i<players.length; i++) {
                 for(var j=0; j<winners.length; j++) {
                     var each = winners[j]
@@ -502,6 +519,7 @@
             var index = obj.i
             if(index == player_i) {
                 players[index].cards = obj.cards
+                showP(player_i.toString())
             }
             return
         }
