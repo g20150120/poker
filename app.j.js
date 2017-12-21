@@ -131,38 +131,38 @@ app.get('/downloadCPP', function(req,res){
 //handle the post of contactFForm and send email using nodemailer
 app.post('/contact_process', function(req,result){
   
-  let transporter = nodemailer.createTransport({
-    //service: "hotmail",
-    host: "smtp.qq.com",
-    port: 465,
-    secureConnection: true,
-    auth:
-    {
-      user: "1467222535@qq.com",
-      pass: "pziglqgwycctifhd"
-    }
-  });
-  // console.log(req.body)
-  var mailSubject = req.body.contactSubject + " from " + req.body.contactName;
+  // let transporter = nodemailer.createTransport({
+  //   //service: "hotmail",
+  //   host: "smtp.qq.com",
+  //   port: 465,
+  //   secureConnection: true,
+  //   auth:
+  //   {
+  //     user: "1467222535@qq.com",
+  //     pass: "pziglqgwycctifhd"
+  //   }
+  // });
+  // // console.log(req.body)
+  // var mailSubject = req.body.contactSubject + " from " + req.body.contactName;
 
-  let mailOptions = {
-    from: "alexanderzhao.info  <1467222535@qq.com>",
-    to: 'alexzhaojc@126.com',
-    subject: mailSubject,
-    text: "From " + req.body.contactEmail + ':\n\n' + req.body.contactMessage
-  };
+  // let mailOptions = {
+  //   from: "alexanderzhao.info  <1467222535@qq.com>",
+  //   to: 'alexzhaojc@126.com',
+  //   subject: mailSubject,
+  //   text: "From " + req.body.contactEmail + ':\n\n' + req.body.contactMessage
+  // };
 
-  transporter.sendMail(mailOptions, (err,info)=>{
-    if(err)
-    {
-      console.log(err);
-      //res.render('error');
-    }
-    else
-    {
-      console.log('Message sent: %s', info.messageId);
-    }
-  });
+  // transporter.sendMail(mailOptions, (err,info)=>{
+  //   if(err)
+  //   {
+  //     console.log(err);
+  //     //res.render('error');
+  //   }
+  //   else
+  //   {
+  //     console.log('Message sent: %s', info.messageId);
+  //   }
+  // });
   result.redirect('/#contact');
 });
 
