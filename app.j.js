@@ -58,7 +58,7 @@ app.get('/poker', function(req, res) {
     if(id == 'admin') {
         // log(req.cookies)
         if(req.cookies.pwd != '$2a$10$kJY.MH4EcVoUOGV3Vgfi/eme.nOjll3LrQa43DuKZoU6DqMoUWwDa') {
-            res.send('<center><h1>FUCK OFF, BITCH</h1></center>')
+            res.send('<center><h1>404</h1></center>')
             return
         }
         flag = [false, true, true, true]
@@ -66,7 +66,7 @@ app.get('/poker', function(req, res) {
 
     } else if(id == 'start') {
         if(req.cookies.pwd != '$2a$10$kJY.MH4EcVoUOGV3Vgfi/eme.nOjll3LrQa43DuKZoU6DqMoUWwDa') {
-            res.send('<center><h1>FUCK OFF, BITCH</h1></center>')
+            res.send('<center><h1>404</h1></center>')
             return
         }
         res.sendFile(__dirname + '/views/poker.html')
@@ -93,7 +93,7 @@ app.post('/poker_process', function(req, res) {
         res.redirect('/poker?id=admin')
         return
     } else {
-        res.send('<center><h1>FUCK OFF, BITCH</h1></center>')
+        res.send('<center><h1>404</h1></center>')
         return
     }
 })
@@ -109,60 +109,73 @@ io.on('connection', function(socket){
 //handle the request to download pdf
 app.get('/downloadPDF', function(req,res){
   
-  // /downloadPDF?id=fileName
-  var thisURL=decodeURI(req.url);
-  var fileName=thisURL.split('?')[1].split('=')[1];
-  var tmpFile="/download/" + fileName + ".pdf";
-  res.redirect(tmpFile);
+    // /downloadPDF?id=fileName
+    var thisURL=decodeURI(req.url);
+    var fileName=thisURL.split('?')[1].split('=')[1];
+    var tmpFile="/download/" + fileName + ".pdf";
+    res.redirect(tmpFile);
 
 });
 
 //handle the request to download txt
 app.get('/downloadCPP', function(req,res){
   
-  // /downloadPDF?id=fileName
-  var thisURL=decodeURI(req.url);
-  var fileName=thisURL.split('?')[1].split('=')[1];
-  var tmpFile="/download/" + fileName + ".cpp";
-  res.redirect(tmpFile);
+    // /downloadPDF?id=fileName
+    var thisURL=decodeURI(req.url);
+    var fileName=thisURL.split('?')[1].split('=')[1];
+    var tmpFile="/download/" + fileName + ".cpp";
+    res.redirect(tmpFile);
 
 });
 
 //handle the post of contactFForm and send email using nodemailer
+cnt = 0
+msg = ""
 app.post('/contact_process', function(req,result){
   
-  // let transporter = nodemailer.createTransport({
-  //   //service: "hotmail",
-  //   host: "smtp.qq.com",
-  //   port: 465,
-  //   secureConnection: true,
-  //   auth:
-  //   {
-  //     user: "1467222535@qq.com",
-  //     pass: "pziglqgwycctifhd"
-  //   }
-  // });
-  // // console.log(req.body)
-  // var mailSubject = req.body.contactSubject + " from " + req.body.contactName;
+  msg += req.body.contactSubject + " from " + req.body.contactName + ": "
+  msg += "From " + req.body.contactEmail + ': ' + req.body.contactMessage
+  msg += '\n\n\n'
+  cnt++
 
-  // let mailOptions = {
-  //   from: "alexanderzhao.info  <1467222535@qq.com>",
-  //   to: 'alexzhaojc@126.com',
-  //   subject: mailSubject,
-  //   text: "From " + req.body.contactEmail + ':\n\n' + req.body.contactMessage
-  // };
+  if(cnt == 10) {
+    
+    let transporter = nodemailer.createTransport({
+      //service: "hotmail",
+      host: "smtp.qq.com",
+      port: 465,
+      secureConnection: true,
+      auth:
+      {
+        user: "1467222535@qq.com",
+        pass: "pziglqgwycctifhd"
+      }
+    });
+    // console.log(req.body)
+    var mailSubject = req.body.contactSubject + " from " + req.body.contactName;
 
-  // transporter.sendMail(mailOptions, (err,info)=>{
-  //   if(err)
-  //   {
-  //     console.log(err);
-  //     //res.render('error');
-  //   }
-  //   else
-  //   {
-  //     console.log('Message sent: %s', info.messageId);
-  //   }
-  // });
+    let mailOptions = {
+      from: "alexanderzhao.info  <1467222535@qq.com>",
+      to: 'alexzhaojc@126.com',
+      subject: "Recent messages from alexanderzhao.info",
+      text: msg
+    };
+
+    transporter.sendMail(mailOptions, (err,info)=>{
+      if(err)
+      {
+        console.log(err);
+        //res.render('error');
+      }
+      else
+      {
+        console.log('Message sent: %s', info.messageId);
+      }
+    });
+    cnt = 0
+    msg = ""
+  }
+  
   result.redirect('/#contact');
 });
 

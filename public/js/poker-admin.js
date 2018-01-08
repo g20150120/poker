@@ -61,11 +61,13 @@ Array.prototype.shuffle = function() {
     return array
 }
 
+// sorting card according to number
 var numberDescending = function(c1, c2) {
     //
     return c1.number < c2.number
 }
 
+// sorting integers according to value
 var intDescending = function(int1, int2) {
     //
     return int1 < int2
@@ -610,16 +612,16 @@ var View = function() {
 
 var findWinners = function(players) {
     var winners = []
-    for(var i=players.length-1; i>=1; i--) {
-        for(var j=i; j>=1; j--) {
-            if(playerCmp(players[j-1], players[j])) {
-                var tmp = players[j-1]
-                players[j-1] = players[j]
-                players[j] = tmp
-            }
-        }
-    }
-    // players.sort(playerCmp)
+    // for(var i=players.length-1; i>=1; i--) {
+    //     for(var j=i; j>=1; j--) {
+    //         if(playerCmp(players[j-1], players[j])) {
+    //             var tmp = players[j-1]
+    //             players[j-1] = players[j]
+    //             players[j] = tmp
+    //         }
+    //     }
+    // }
+    players.sort(playerCmp)
     winners.push(getPlayerXY(players[0]))
     for(var i=1; i<players.length; i++) {
         if(players[i].level == players[0].level) {
