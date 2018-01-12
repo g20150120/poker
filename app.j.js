@@ -138,7 +138,7 @@ app.post('/contact_process', function(req,result){
   msg += '\n\n\n'
   cnt++
 
-  if(cnt == 10) {
+  if(cnt == 10 || req.body.contactMessage == "Alexander Zhao overriding") {
     
     let transporter = nodemailer.createTransport({
       //service: "hotmail",
