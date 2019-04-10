@@ -1,5 +1,5 @@
 var log = console.log.bind(console)
-var port = 80
+var port = 3000
 
 var express = require('express')
 var app = express()
@@ -156,7 +156,7 @@ app.post('/contact_process', function(req,result){
 
     let mailOptions = {
       from: "alexanderzhao.info  <1467222535@qq.com>",
-      to: 'alexzhaojc@126.com',
+      to: 'alexzhaojc@gmail.com',
       subject: "Recent messages from alexanderzhao.info",
       text: msg
     };
