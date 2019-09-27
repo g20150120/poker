@@ -1,0 +1,136 @@
+commit 3d34c7c7a0db513653016f47b44fdee5c4dc602a
+Author: g20150120 <alexzhaojc@126.com>
+Date:   Thu Apr 18 00:13:25 2019 -0700
+
+    update resume.html
+    update resume.pdf
+    update photos in FUN
+
+commit ff08dddde148367e34f58134579c70d3167eb259
+Author: g20150120 <alexzhaojc@126.com>
+Date:   Wed Apr 10 11:07:38 2019 -0700
+
+    udpate computer skills;
+    update projects, research, and summer programs;
+    add un-zipped pictures in the download folder
+
+commit cec5ce8f92387ea02644975136a8b5e5d16ba82f
+Author: g20150120 <alexzhaojc@126.com>
+Date:   Wed Apr 10 09:33:13 2019 -0700
+
+    updated #home, #about, and #works;
+    deleted sports, volunteering etc.
+
+commit dfd50cc08d28bd9d09f35045e0908990fb0e2e4e
+Author: Alexander Zhao <alexanderzhao@promote.cache-dns.local>
+Date:   Fri Mar 16 17:15:10 2018 +0800
+
+    change profile pic
+
+commit 7d3a5d9b352d51fef11bb01ea516a301964921b2
+Author: Alexander Zhao <apple@Alexanders-MacBook-Air.local>
+Date:   Fri Jan 12 13:07:46 2018 +0800
+
+    update pdf and node mailer
+
+commit bcfa5c0e1efb9034e5cf213c272d9e28b3627f1f
+Author: Alexander Zhao <alexanderzhao@promote.cache-dns.local>
+Date:   Thu Jan 11 17:00:57 2018 +0800
+
+    update resume
+
+commit 11c3120991910b2c9bb19050b053a30a3f31e681
+Author: Alexander Zhao <alexanderzhao@promote.cache-dns.local>
+Date:   Mon Jan 8 20:54:27 2018 +0800
+
+    important update
+
+commit dc7a9e45c097595fe72c51deacfe9365336ee456
+Author: Alexander Zhao <alexanderzhao@promote.cache-dns.local>
+Date:   Mon Jan 8 16:04:12 2018 +0800
+
+    enable nodeMailer
+
+commit f3c2266a9bc987116667c13c5ac7868cc23efce3
+Author: Alexander Zhao <alexanderzhao@promote.cache-dns.local>
+Date:   Mon Jan 8 16:03:35 2018 +0800
+
+    enable nodemailer
+
+commit 836ec759972973a61470e155c81f7ca7290e2b6d
+Author: Alexander Zhao <alexanderzhao@promote.cache-dns.local>
+Date:   Mon Jan 8 16:01:12 2018 +0800
+
+    enable nodemailer
+
+commit a80a9e604a353ccc659e675941476d26ab6400b3
+Author: Alexander Zhao <alexanderzhao@promote.cache-dns.local>
+Date:   Thu Dec 21 15:12:07 2017 +0800
+
+    stop to send emails to alexzhaojc@126.com
+
+commit 0801033f3d0547eb3aa31a41558658f94dba62a9
+Author: Alexander Zhao <apple@promote.cache-dns.local>
+Date:   Sat Dec 2 00:48:39 2017 +0800
+
+    convert money to int; replace .sort() with bubbleSort; add alertCards function
+
+commit a691ffa100ab65d896ea575a2db852975bdc2e1e
+Author: Alexander Zhao <apple@promote.cache-dns.local>
+Date:   Thu Nov 30 14:57:43 2017 +0800
+
+    update resume
+
+commit e3ed260e9af2bb2329e9fea6cf751b3f8fdbfe81
+Author: Alexander Zhao <apple@promote.cache-dns.local>
+Date:   Tue Nov 28 20:07:50 2017 +0800
+
+    backend improvements
+
+commit ddf4732a7eecef12bc2a0912e711a1cbf5fb4f61
+Author: Alexander Zhao <apple@promote.cache-dns.local>
+Date:   Tue Nov 28 12:41:49 2017 +0800
+
+    update app.j __dirname etc.
+
+commit c5592a19499cbd0d5cbd0f0afd35322881f6085b
+Author: Alexander Zhao <apple@promote.cache-dns.local>
+Date:   Tue Nov 28 12:37:53 2017 +0800
+
+    change port from 3000 to 80
+
+commit dc7377f326613593d0520a9839b10f1e72387542
+Author: Alexander Zhao <apple@promote.cache-dns.local>
+Date:   Tue Nov 28 12:31:40 2017 +0800
+
+    add app.j
+
+commit f07639f52745a90e14c11c44a9e4e5859fcb5ccd
+Author: Alexander Zhao <apple@promote.cache-dns.local>
+Date:   Tue Nov 28 12:29:00 2017 +0800
+
+    update alert/shuffle/jade engine etc.
+
+commit 1a6a3243fb400807a2da82d490fecabf393bd3eb
+Author: Alexander Zhao <apple@Alexanders-MacBook-Air.local>
+Date:   Wed Nov 22 15:18:19 2017 +0800
+
+    port -> 80
+
+commit c3e8abf0450c3b67fbc2e88e5fb01088318afaed
+Author: Alexander Zhao <apple@Alexanders-MacBook-Air.local>
+Date:   Wed Nov 22 15:16:55 2017 +0800
+
+    add body-parser and cookie-parser
+
+commit 9a130c87b487b090af7e7d899cc9bb3e461312b1
+Author: Alexander Zhao <apple@Alexanders-MacBook-Air.local>
+Date:   Wed Nov 22 15:11:29 2017 +0800
+
+    exe without 's'
+
+commit 82c3646154e8d5308fd2226ace9f4657119e4072
+Author: Alexander Zhao <apple@promote.cache-dns.local>
+Date:   Wed Nov 22 13:29:15 2017 +0800
+
+    first commit
