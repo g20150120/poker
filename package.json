@@ -6,7 +6,7 @@
     "begin": "node app.js"
   },
   "dependencies": {
-    "body-parser": "~1.17.1",
+    "body-parser": "~1.20.1",
     "cookie-parser": "~1.4.3",
     "express": "^4.15.2",
     "jade": "^1.11.0",
